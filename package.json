@@ -1,0 +1,21 @@
+{
+  "name": "network-map",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "4.21.1",
+    "mongodb": "6.10.0",
+    "socket.io": "4.8.1",
+    "nmap": "1.1.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "A mapping tool to enumerate devices on your network",
+  "devDependencies": {}
+}

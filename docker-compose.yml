@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  network-map:
+    build: .                   # Build the app using your Dockerfile
+    container_name: network_mapper
+    # ports: 
+    #   - "3000:3000"            # Expose the app on localhost:3000
+    network_mode: host          # Host networking mode for nmap
+    depends_on:
+      - mongodb
+    volumes: 
+      - .:/app                 # Mount project directory for live updates
+      - /app/node_modules      # Isolate container node_modules
+    working_dir: /app          # Set working directory inside the container
+    command: ["npm", "start"]  # Start the app
+  
+  mongodb:
+    image: mongo:5
+    container_name: mongodb
+    ports: 
+      - "27017:27017"          # Expose MongoDB on localhost:27017
+    volumes:
+      - mongodb_data:/data/db  # Persistent MongoDB data storage
+
+volumes:
+  mongodb_data:
