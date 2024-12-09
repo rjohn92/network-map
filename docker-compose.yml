@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  mapper:
+    container_name: network_overview
+    build: .
+    ports:
+      - "5000:5000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["node", "index.js"]
