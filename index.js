@@ -1,41 +1,14 @@
 import express from "express";
-import { exec } from "child_process";
-import { getGatewayNetworkRange } from "./helpers/getNetworkInfo.js";
+import scanRoutes from "./routes/scanRoutes.js";
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+const HOST_IP = process.env.HOST_IP;
 
-// Determine the network range dynamically
 
+app.use(express.static("public")); // Serve frontend static files
+app.use("/", scanRoutes);          // Add routes for scanning logic
 
-// Handle all requests at the root route
-app.get("/", (req, res) => {
-  if (req.query.scan === "true") {
-  const ipRange = getHostIPRange();
-
-  if (!ipRange) {
-    res.status(500).send("Failed to determine host network range.");
-    return;
-  }
-
-  console.log(`Starting scan for range: ${ipRange}`);
-  exec(`nmap -sn ${ipRange}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error during scan: ${stderr}`);
-      res.status(500).send("Error during scan.");
-      return;
-    }
-
-    res.type("text/plain").send(stdout);
-  });
-} else {
-  res.sendFile("index.html", { root: "./public"});
-}
-});
-// Serve static assets like CSS and JS
-app.use(express.static("public"));
-
-// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://${HOST_IP}:${PORT}`);
 });

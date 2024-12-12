@@ -20,12 +20,18 @@ function initializeTabs() {
 // Handle "Scan Network" Button Click
 function initializeNetworkScan() {
   const spinner = document.getElementById("spinner");
-  const output = document.getElementById("output");
+  const scanOutput = document.getElementById("scanOutput");
+  const rawOutput = document.getElementById("rawOutput");
+
 
   document.getElementById("scan").addEventListener("click", () => {
+    console.log("Fetching scan results...");
+
     // Show spinner and clear output
     spinner.style.display = "block";
-    output.textContent = "Scanning network...";
+    scanOutput.textContent = "Scanning network...";
+    rawOutput.textContent = "";
+
 
     // Fetch scan results
     fetch("/?scan=true")
@@ -38,12 +44,12 @@ function initializeNetworkScan() {
       .then(data => {
         // Hide spinner and display results
         spinner.style.display = "none";
-        output.textContent = data;
+        scanOutput.textContent = data;
       })
       .catch(error => {
         // Hide spinner and display error
         spinner.style.display = "none";
-        output.textContent = `Error: ${error.message}`;
+        scanOutput.textContent = `Error: ${error.message}`;
       });
   });
 }

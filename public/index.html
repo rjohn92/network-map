@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Network Scanner</title>
   <!-- Link to external CSS -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <h1>Network Scanner</h1>
@@ -25,8 +25,8 @@
   <div id="scan-logs" class="tab-content">
     <h2>Scan Logs</h2>
     <button id="scan">Start Network Scan</button>
-    <div id="spinner"></div>
-    <pre id="output">Logs will appear here...</pre>
+    <div id="spinner" style="display:none;">Scanning...</div>
+    <pre id="scanOutput">Logs will appear here...</pre>
   </div>
 
   <div id="raw-logs" class="tab-content">

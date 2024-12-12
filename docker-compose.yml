@@ -3,10 +3,12 @@ services:
   mapper:
     container_name: network_overview
     build: .
+    image: rjohn92/network-map:latest
     ports:
-      - "5000:5000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "${PORT}:${PORT}"
+    environment:
+      - HOST_IP=${HOST_IP}
+      - PORT=${PORT}
     volumes:
       - .:/app
       - /app/node_modules
