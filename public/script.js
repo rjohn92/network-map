@@ -25,34 +25,26 @@ function initializeNetworkScan() {
 
 
   document.getElementById("scan").addEventListener("click", () => {
-    console.log("Fetching scan results...");
-
-    // Show spinner and clear output
-    spinner.style.display = "block";
-    scanOutput.textContent = "Scanning network...";
-    rawOutput.textContent = "";
-
-
-    // Fetch scan results
+    console.log("Button clicked: Starting network scan...");
+  
     fetch("/?scan=true")
       .then(response => {
+        console.log("Response received:", response.status); // Check HTTP status
         if (!response.ok) {
           throw new Error("Failed to fetch scan results.");
         }
-        return response.text();
+        return response.text(); // Correct method to get response body as text
       })
       .then(data => {
-        // Hide spinner and display results
-        spinner.style.display = "none";
-        scanOutput.textContent = data;
+        console.log("Scan Results Received:", data); // Log scan results
+        document.getElementById("scanOutput").textContent = data; // Display results
       })
       .catch(error => {
-        // Hide spinner and display error
-        spinner.style.display = "none";
-        scanOutput.textContent = `Error: ${error.message}`;
+        console.error("Error during fetch:", error.message);
+        document.getElementById("scanOutput").textContent = `Error: ${error.message}`;
       });
   });
-}
+}  
 
 // Initialize the app
 document.addEventListener("DOMContentLoaded", () => {
