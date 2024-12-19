@@ -5,7 +5,7 @@ import path from "path";
 const router = Router();
 const HOST_IP = process.env.HOST_IP || "10.0.0.1/24";
 
-router.get("/", async (req, res) => {
+router.get("/network-map", async (req, res) => {
   console.log("Query parameters received:", req.query);
 
   if (req.query.scan === "true") {

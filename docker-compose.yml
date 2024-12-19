@@ -1,7 +1,7 @@
 version: "3.9"
 services:
-  mapper:
-    container_name: network_overview
+  network-map:
+    container_name: network-map
     build: .
     image: rjohn92/network-map:latest
     ports:
@@ -13,3 +13,7 @@ services:
       - .:/app
       - /app/node_modules
     command: ["node", "index.js"]
+
+networks:
+  network-map:  # Reuse the shared network created by network_overview
+    external: true
