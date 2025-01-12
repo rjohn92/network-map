@@ -5,26 +5,21 @@ import path from "path";
 const router = Router();
 const HOST_IP = process.env.HOST_IP || "10.0.0.1/24";
 
-router.get("/network-map", async (req, res) => {
-  console.log("Query parameters received:", req.query);
+// API Endpoint for Network Scan
+router.post("/scan", async (req, res) => {
+  console.log("POST request received at /network-map/api/scan");
+  console.log(`Scan triggered for range: ${HOST_IP}`);
 
-  if (req.query.scan === "true") {
-    try {
-      console.log(`Scan triggered for range: ${HOST_IP}`);
-      
-      // Await scan results
-      const results = await runNetworkScan(HOST_IP);
-      console.log("Scan results to be sent:\n", results);
+  try {
+    // Run the network scan
+    const results = await runNetworkScan(HOST_IP);
+    console.log("Scan results:\n", results);
 
-      // Send results as plain text
-      res.type("text/plain").send(results);
-    } catch (error) {
-      console.error("Error during scan:", error);
-      res.status(500).send("Error during scan.");
-    }
-  } else {
-    console.log("Serving index.html");
-    res.sendFile("index.html", { root: path.resolve("public") });
+    // Return results as JSON
+    res.json({ success: true, results });
+  } catch (error) {
+    console.error("Error during scan:", error);
+    res.status(500).json({ success: false, message: "Error during scan.", error: error.message });
   }
 });
 
